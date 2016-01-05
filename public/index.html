@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">    
+  </head>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      line-height: 1.7;
+    }
+    
+    .columnParticipant {
+      height: 100%;
+      padding: 20px 0 0 20px;
+      background-color: #3D5AFE;
+      color: #C5CAE9;   
+    }
+    
+    .columnParticipant__heading {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #FFF;
+    }
+
+    .listParticipant {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .listParticipant__heading {
+      font-size: 1rem;  
+      color: #C5CAE9;
+    }
+    
+    .listParticipant__participants {
+      list-style-type: none;
+      padding-left: 10px;
+    }
+    
+    #me {
+      padding-left: 10px;      
+    }
+    
+    .listChat {
+      width: 100%;
+    }
+
+    .h-full {
+      height: 100%;
+    }
+
+    .pos-r {
+      position: relative
+    }
+    
+    .post {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+    }
+    
+    .sectionChat__heading {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E0E0E0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    
+    .listChat__messages {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+    
+    .listChat__message {
+      position: relative;
+      margin: 0;
+      margin-bottom: 12px;
+      padding: 10px 28px 12px 28px;
+      border-radius: 27px;
+      background-color: #E8EAF6;
+      list-style-type: none;
+      line-height: 1;
+    }
+
+     .listChat__message:after {
+        border-top: solid 7px transparent;
+        border-bottom: solid 7px transparent;
+        border-right: solid 10px #E8EAF6;
+        left: -7px;
+        content:"";
+        display:block;
+        height:0;
+        top:30px;
+        margin-top:-7px;
+        position: absolute;
+        width:0;
+    }
+    
+    .listChat__name {
+      display: inline-block;
+      margin-right: 7px;
+      margin-bottom: 7px;
+      font-size: .8rem;
+      font-weight: bold;
+    }
+    
+    .listChat__time {
+      display: inline-block;
+      margin-bottom: 7px;
+      font-size: .8rem;
+      color: #BBB;
+    }
+    
+    .listChat__body {
+      display: block;
+      line-height: 1.5;
+    }
+    
+    .talk__input {
+      width: 80%;
+      padding: 0 15px;
+      height: 40px;
+      border-radius: 30px;
+      border: 2px solid #1A237E;      
+    }
+
+  </style>
+  <body>    
+
+    <div class="container-fluid h-full">
+      <div class="row h-full">
+        <section class="col-sm-3 columnParticipant">
+          <h2 class="columnParticipant__heading">チャットルーム</h2>
+          <p id="me"></p>
+
+          <section class="listParticipant">
+            <h3 class="listParticipant__heading">参加者(<span class="listParticipant__count">0</span>)</h3>
+            <ul class="listParticipant__participants" id="memberList"></ul>
+          </section>
+        </section>
+        <section class="col-sm-9 pos-r h-full sectionChat">
+          <h2 class="sectionChat__heading">発言</h2>
+          <ul id="messages" class="listChat__messages"></ul>
+          <form class="post" action="" id="form">
+              <input class="talk__input" id="input" autocomplete="off" />
+              <button class="talk__btn">Send</button>              
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script src='/js/index.js'></script>
+  </body>
+</html>

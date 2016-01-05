@@ -1,5 +1,6 @@
 .DS_Store
 
 node_modules/
-dist/*
-!/dist/.gitkeep
+public/*
+!/public/**/.gitkeep
+!/public/index.html
