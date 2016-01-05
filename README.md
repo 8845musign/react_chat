@@ -1,6 +1,6 @@
 # react_chat
 
-# run
+## run
 
 ```
 npm install
