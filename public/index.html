@@ -131,31 +131,14 @@
       border: 2px solid #1A237E;      
     }
 
+    #app {
+      height: 100%;
+    }
+
   </style>
-  <body>    
+  <body> 
 
-    <div class="container-fluid h-full">
-      <div class="row h-full">
-        <section class="col-sm-3 columnParticipant">
-          <h2 class="columnParticipant__heading">チャットルーム</h2>
-          <p id="me"></p>
-
-          <section class="listParticipant">
-            <h3 class="listParticipant__heading">参加者(<span class="listParticipant__count">0</span>)</h3>
-            <ul class="listParticipant__participants" id="memberList"></ul>
-          </section>
-        </section>
-        <section class="col-sm-9 pos-r h-full sectionChat">
-          <h2 class="sectionChat__heading">発言</h2>
-          <ul id="messages" class="listChat__messages"></ul>
-          <form class="post" action="" id="form">
-              <input class="talk__input" id="input" autocomplete="off" />
-              <button class="talk__btn">Send</button>              
-          </form>
-        </section>
-      </div>
-    </div>
-
+    <div id="app"></div>
     <script src='/js/index.js'></script>
   </body>
 </html>

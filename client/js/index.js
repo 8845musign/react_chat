@@ -1,87 +1,46 @@
-'use strict'
+import React from 'react'
+import ReactDom from 'react-dom'
+import { createStore, applyMiddleware, compose } from 'redux'
+import { Provider } from 'react-redux'
+import io from 'socket.io-client'
 
-import Socket from 'socket.io-client'
+import socketMiddleware from './middlewares/socketMiddleware'
+import rootReducer from './reducers'
+import * as actionTypes from './constants/ActionTypes'
+import * as actionChat from './actions/Chat'
+import App from './containers/App.jsx'
 
-let socket = Socket();
+let nameList = [
+  'hoge',
+  'hige',
+  'fuga',
+  'meshi',
+];
 
-let form = document.getElementById('form');
-let input = document.getElementById('input');
-form.addEventListener('submit', function(e){
-  socket.emit('chat message', { id:socket.id, message: input.value });
-  input.value = '';
+let name = nameList[Math.floor(Math.random() * nameList.length)];
 
-  e.preventDefault();
+const socket = io("http://localhost:3000/", { query: 'name=' + name });
+
+const createStoreWithMiddleware = compose(
+  applyMiddleware(socketMiddleware(socket))
+)(createStore);
+
+const store = createStoreWithMiddleware(rootReducer, {});
+
+socket.on(actionTypes.ENTER_MEMBER, data => store.dispatch(actionChat.enterMember(data)));
+socket.on(actionTypes.RECEIVE_MESSAGE, data => store.dispatch(actionChat.receiveMessage(data)));
+
+socket.on('connect', function(){
+  var self = {
+    id: socket.id,
+    name: name
+  };
+  store.dispatch(actionChat.enter(self));
 });
 
-let message = document.getElementById('messages');
-socket.on('chat message', function(data){
-  let text = `<li class="listChat__message"><span class="listChat__name">${ data.name }</span><span class="listChat__time">${ new Date(data.time).toLocaleString() }</span><span class="listChat__body">${ data.message }</span></li>`
-  addMessage(text);
-});
-
-function addMessage(msg) {
-  var li = document.createElement('li');
-  li.innerHTML = msg;
-  message.appendChild(li);  
-}
-
-let memberList = document.getElementById("memberList");
-/**
- * {
- *  enter : "some name",
- *  list : [
- *    "aaaa",
- *    "bbbb",
- *    "cccc"
- *  ]
- * }
- */
-socket.on('enter', function(value){
-  if (socket.id === value.enter.id) {
-   // 自分の名前
-   document.getElementById('me').innerText = value.enter.name;
-  } else {
-    // 他の人が入った
-    addMessage(value.enter.name + "さんが入室しました。");
-  }
-  
-  updateMembers(value.list);
-});
-
-function updateMembers(members) {
-  let membersFrag = document.createDocumentFragment();
-
-  members.forEach(function(member){
-    membersFrag.appendChild(createMemberLi(member.name));
-  });
-
-  memberList.innerHTML = '';
-  memberList.appendChild(membersFrag);
-  
-  document.querySelector('.listParticipant__count').innerText = members.length;
-}
-
-socket.on('exit', function(value){
-  updateMembers(value.list);
-  addMessage(value.exit.name + "さんが退室しました。");
-});
-
-function createMemberLi(name) {
-  let li = document.createElement('li');
-  li.innerText = name;  
-  return li;
-}
-
-
-/**
- * {
- *  exit : "some name",
- *  members : [
- *    "aaaa",
- *    "bbbb",
- *    "cccc"
- *  ]
- * }
- */
-socket.on('exit', function(value){
-});
+ReactDom.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app')
+);

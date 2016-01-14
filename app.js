@@ -11,42 +11,22 @@ var members = {
 app.use(express.static('public'));
 
 io.on('connection', function(socket){
-  console.log('a user connected');
-
-  var addMemberName = 'member' + (++members.cnt);
   members.list.push({
     id : socket.id,
-    name : addMemberName
+    name : socket.handshake.query.name
   });
 
-  io.emit('enter', {
+  io.emit('ENTER_MEMBER', {
     enter : {
       id : socket.id,
-      name : addMemberName
+      name : socket.handshake.query.name
     },
     list : members.list
   });
 
-  socket.on('disconnect', function(socket){
-    console.log(arguments);
-    console.log('user disconnected');
-    console.log(socket.id);
-    console.log(members.list);
-    var delMember = removeMember(socket.id);    
-    if (!delMember) return;
-
-    io.emit('exit', {
-      exit : {
-        id : delMember.id,
-        name : delMember.name
-      },
-      list : members.list
-    });    
-  });
-
-  socket.on('chat message', function(value){
-    var name = getNameFromId(value.id);
-    io.emit('chat message', { message: value.message, name: name, time: new Date().getTime() });
+  socket.on('SENT_MESSAGE', function(value){
+    var name = getNameFromId('/#' + value.id);
+    io.emit('RECEIVE_MESSAGE', { body: value.message, name: name, time: new Date().getTime() });
   });});
 
 http.listen(3000, function(){
@@ -56,6 +36,8 @@ http.listen(3000, function(){
 
 function getNameFromId(id) {
   var name = '';
+
+  console.log(members.list);
 
   members.list.some(function(member){
     if (id === member.id) {
@@ -67,17 +49,17 @@ function getNameFromId(id) {
   return name;
 }
 
-function removeMember(id) {
-  members.list.forEach(function(member, index){
-    if (member.id === id) {
-       var delMember = {
-         id : member.id,
-         name : member.name
-       }
-       member.list.splice(index, 1);
-       return delMember;
-    }
-  });
+// function removeMember(id) {
+//   members.list.forEach(function(member, index){
+//     if (member.id === id) {
+//        var delMember = {
+//          id : member.id,
+//          name : member.name
+//        }
+//        member.list.splice(index, 1);
+//        return delMember;
+//     }
+//   });
   
-  return null;
-}
+//   return null;
+// }
