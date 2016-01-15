@@ -9,7 +9,7 @@ export default class ListParticipant extends Component {
 
     return (
       <section className="listParticipant">
-        <h3 className="listParticipant__heading">参加者(<span className="listParticipant__count">{participants ? participants.length : 0}</span>)</h3>
+        <div className="name">member(<span className="listParticipant__count">{participants ? participants.length : 0}</span>)</div>
         <ul className="listParticipant__participants" id="memberList">
           {participants.map(participant => <li>{participant.name}</li>)}
         </ul>

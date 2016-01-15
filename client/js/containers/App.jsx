@@ -23,22 +23,25 @@ class App extends Component {
     let { self, messages, members } = this.props;
     
     return (
-      <div className="container-fluid h-full">
-        <div className="row h-full">
-          <section className="col-sm-3 columnParticipant">
-            <h2 className="columnParticipant__heading">チャットルーム</h2>
-            <ParticipantSelf self={self} />
+      <div className="container">
+        <h1><i className="fa fa-comments"></i>Chatroom</h1>
 
-            <ListParticipant participants={members} />
-          </section>
-
-          <section className="col-sm-9 pos-r h-full sectionChat">
-            <h2 className="sectionChat__heading">発言</h2>
-
+        <div className="container__self">
+          <div className="fa-container"><i className="fa fa-user"></i></div>  
+          <div className="name">you</div>
+          <ParticipantSelf self={self} />
+        </div>
+        <div className="container__message">
+          <section className="h-full sectionChat">
             <ListChat messages={messages} />
-
-            <ChatForm onSentMessage={onSentMessage} />
           </section>
+
+          <ChatForm onSentMessage={onSentMessage} />
+        </div>
+
+        <div className="container__member">
+          <div className="fa-container fa-member"><i className="fa fa-user"></i></div>  
+          <ListParticipant participants={members} />
         </div>
       </div>
     )

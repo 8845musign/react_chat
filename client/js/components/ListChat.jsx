@@ -10,7 +10,7 @@ export default class ListChat extends Component {
     const messages = this.props.messages;
     return (
       <ul id="messages" className="listChat__messages">
-        {messages.map(message => <ChatMessage message={message} />)}
+        {messages.reverse().map(message => <ChatMessage message={message} />)}
       </ul>
     )
   }

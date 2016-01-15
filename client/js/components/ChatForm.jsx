@@ -22,9 +22,10 @@ export default class ChatForm extends Component {
 
   render() {
     return (
-      <form className="post" id="form" onSubmit={(e) => this.handleSubmit(e)}>
-        <input className="talk__input" id="input" autoComplete="off" />
-        <button className="talk__btn">Send</button>
+      <form action="" onSubmit={(e) => this.handleSubmit(e)}>
+        <i className="fa fa-pencil"></i>
+        <input type="text" id="input" autoComplete="off" placeholder='write your message!' />
+        <button type='submit'>SENT</button>
       </form>
     );
   }
