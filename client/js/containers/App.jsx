@@ -40,7 +40,7 @@ class App extends Component {
         </div>
 
         <div className="container__member">
-          <div className="fa-container fa-member"><i className="fa fa-user"></i></div>  
+          <div className="fa-container fa-member"><i className="fa fa-users"></i></div>  
           <ListParticipant participants={members} />
         </div>
       </div>

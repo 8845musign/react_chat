@@ -35,7 +35,12 @@ io.on('connection', function(socket){
     var name = getNameFromId(id);
     console.log("receive mesagge: (" + id + ")" + value.message);
     // 全員に発言を送信
-    io.emit('RECEIVE_MESSAGE', { body: value.message, name: name, time: new Date().getTime() });
+    io.emit('RECEIVE_MESSAGE', {
+      body: value.message,
+      name: name,
+      id: id,
+      time: new Date().getTime()
+    });
   });
 
   // メンバーの退室

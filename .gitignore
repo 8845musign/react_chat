@@ -4,3 +4,4 @@ node_modules/
 public/*
 !/public/**/.gitkeep
 !/public/index.html
+!public/css/style.css
