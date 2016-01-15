@@ -31,7 +31,9 @@ io.on('connection', function(socket){
 
   // クライアント側からの発言を受信
   socket.on('SENT_MESSAGE', function(value){
-    var name = getNameFromId('/#' + value.id);
+    var id = '/#' + value.id
+    var name = getNameFromId(id);
+    console.log("receive mesagge: (" + id + ")" + value.message);
     // 全員に発言を送信
     io.emit('RECEIVE_MESSAGE', { body: value.message, name: name, time: new Date().getTime() });
   });
@@ -69,8 +71,6 @@ http.listen(3000, function(){
  */
 function getNameFromId(id) {
   var name = '';
-
-  console.log(members.list);
 
   members.list.some(function(member){
     if (id === member.id) {
