@@ -1,5 +1,6 @@
 // Libaray
 import React, { Component } from 'react'
+import ReactDom from 'react-dom'
 import { connect } from 'react-redux'
 // Module
 import * as actionChat from '../actions/Chat'
@@ -32,7 +33,7 @@ class App extends Component {
           <ParticipantSelf self={self} />
         </div>
         <div className="container__message">
-          <section className="h-full sectionChat">
+          <section ref="list" className="h-full sectionChat">
             <ListChat messages={messages} />
           </section>
 
@@ -45,6 +46,11 @@ class App extends Component {
         </div>
       </div>
     )
+  }
+  
+  componentDidUpdate() {
+    let el = ReactDom.findDOMNode(this.refs.list);
+    el.scrollTop = el.scrollHeight;
   }
 }
 
