@@ -42,7 +42,7 @@ export default function chatReducer(state = initialState, action) {
             time: new Date(),
             // ここでメッセージを生成するのはいけてないのでは...
             body: action.data.enter.name + 'さんが入室しました。',
-            id: state.message.length++
+            id: state.message.length ? 0 : state.message.length++
           }
         ]
       });
@@ -63,7 +63,7 @@ export default function chatReducer(state = initialState, action) {
             time: new Date(),
             // ここでメッセージを生成するのはいけてないのでは...
             body: action.data.exit.name + 'さんが退室しました。',
-            id: state.message.length++
+            id: state.message.length ? 0 : state.message.length++
           }
         ]
       });
@@ -85,7 +85,7 @@ export default function chatReducer(state = initialState, action) {
             name: action.message.name,
             time: action.message.time,
             body: action.message.body,
-            id: state.message.length++
+            id: state.message.length ? 0 : state.message.length++
           }
         ]
       });
