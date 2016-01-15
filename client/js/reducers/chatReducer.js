@@ -41,7 +41,8 @@ export default function chatReducer(state = initialState, action) {
             name: '',
             time: new Date(),
             // ここでメッセージを生成するのはいけてないのでは...
-            body: action.data.enter.name + 'さんが入室しました。'
+            body: action.data.enter.name + 'さんが入室しました。',
+            id: state.message.length++
           }
         ]
       });
@@ -61,7 +62,8 @@ export default function chatReducer(state = initialState, action) {
             name: '',
             time: new Date(),
             // ここでメッセージを生成するのはいけてないのでは...
-            body: action.data.exit.name + 'さんが退室しました。'
+            body: action.data.exit.name + 'さんが退室しました。',
+            id: state.message.length++
           }
         ]
       });
@@ -70,6 +72,8 @@ export default function chatReducer(state = initialState, action) {
       /**
        * 通常メッセージの受け取り
        */
+      let type = (state.self.id === action.message.id.replace('/#', '')) ? messageTypes.NORMAL : messageTypes.MEMBER;
+
       return Object.assign({}, state, {
         members: [
           ...state.members,
@@ -77,10 +81,11 @@ export default function chatReducer(state = initialState, action) {
         messages: [
           ...state.messages,
           {
-            type: messageTypes.NORMAL,
+            type: type,
             name: action.message.name,
             time: action.message.time,
-            body: action.message.body
+            body: action.message.body,
+            id: state.message.length++
           }
         ]
       });
