@@ -13,7 +13,7 @@ const initialState = {
 /**
  * アクションを受け取ってチャットのStateを生成
  */
-export default function chat(state = initialState, action) {
+export default function chatReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.ENTER:
       /**
