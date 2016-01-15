@@ -14,6 +14,7 @@ app.use(express.static('public'));
 
 // ユーザの接続
 io.on('connection', function(socket){
+  console.log('A member connect: ' + socket.id);
   members.list.push({
     id : socket.id,
     name : socket.handshake.query.name
@@ -33,8 +34,29 @@ io.on('connection', function(socket){
     var name = getNameFromId('/#' + value.id);
     // 全員に発言を送信
     io.emit('RECEIVE_MESSAGE', { body: value.message, name: name, time: new Date().getTime() });
-  });});
+  });
 
+  // メンバーの退室
+  socket.on('disconnect', function() {
+    console.log("A member disconnect: " + socket.id);
+    
+    var id = socket.id;
+    var name = getNameFromId(id);
+
+    // データからメンバーを削除
+    removeMember(id);
+
+    // 全員に退室を通知
+    io.emit('EXIT_MEMBER', {
+      exit : {
+        id : id,
+        name : name
+      },
+      list : members.list
+    });
+
+  });
+});
 
 // Serverの立ち上げ
 http.listen(3000, function(){
@@ -60,17 +82,17 @@ function getNameFromId(id) {
   return name;
 }
 
-// function removeMember(id) {
-//   members.list.forEach(function(member, index){
-//     if (member.id === id) {
-//        var delMember = {
-//          id : member.id,
-//          name : member.name
-//        }
-//        member.list.splice(index, 1);
-//        return delMember;
-//     }
-//   });
+function removeMember(id) {
+  members.list.forEach(function(member, index){
+    if (member.id === id) {
+       var delMember = {
+         id : member.id,
+         name : member.name
+       }
+       members.list.splice(index, 1);
+       return delMember;
+    }
+  });
   
-//   return null;
-// }
+  return null;
+}

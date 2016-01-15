@@ -30,6 +30,7 @@ const store = createStoreWithMiddleware(rootReducer, {});
 
 // サーバーからの通信の受け取り
 socket.on(actionTypes.ENTER_MEMBER, data => store.dispatch(actionChat.enterMember(data)));
+socket.on(actionTypes.EXIT_MEMBER, data => store.dispatch(actionChat.exitMember(data)));
 socket.on(actionTypes.RECEIVE_MESSAGE, data => store.dispatch(actionChat.receiveMessage(data)));
 
 // selfの入室

@@ -46,6 +46,26 @@ export default function chatReducer(state = initialState, action) {
         ]
       });
 
+    case actionTypes.EXIT_MEMBER:
+      /**
+       * メンバーの入室
+       */
+      return Object.assign({}, state, {
+        members: [
+          ...action.data.list
+        ],
+        messages: [
+          ...state.messages,
+          {
+            type: messageTypes.EXIT,
+            name: '',
+            time: new Date(),
+            // ここでメッセージを生成するのはいけてないのでは...
+            body: action.data.exit.name + 'さんが退室しました。'
+          }
+        ]
+      });
+
     case actionTypes.RECEIVE_MESSAGE:
       /**
        * 通常メッセージの受け取り

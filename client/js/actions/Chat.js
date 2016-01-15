@@ -26,6 +26,14 @@ export function enterMember(data) {
 }
 
 /**
+ * ルームからメンバーの退室
+ * @param data
+ */
+export function exitMember(data) {
+  return { type: types.EXIT_MEMBER, data };
+}
+
+/**
  * 発言の受信
  */
 export function receiveMessage(message) {
