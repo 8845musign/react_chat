@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+/**
+ * 参加者リストを表示
+ */
 export default class ListParticipant extends Component {
   render() {
     let { participants } = this.props;

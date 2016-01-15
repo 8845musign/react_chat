@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+/**
+ * 発言を表示
+ */
 export default class ChatMessageComponent extends Component {
   render() {
     const message = this.props.message;
