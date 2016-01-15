@@ -10,14 +10,7 @@ import * as actionTypes from './constants/ActionTypes'
 import * as actionChat from './actions/Chat'
 import App from './containers/App.jsx'
 
-let nameList = [
-  'hoge',
-  'hige',
-  'fuga',
-  'meshi',
-];
-
-let name = nameList[Math.floor(Math.random() * nameList.length)];
+let name = prompt("名前を入力してください");
 
 const socket = io("http://localhost:3000/", { query: 'name=' + name });
 
