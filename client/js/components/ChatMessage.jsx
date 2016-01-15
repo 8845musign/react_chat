@@ -8,10 +8,11 @@ export default class ChatMessageComponent extends Component {
   render() {
     const message = this.props.message;
 
-    let isMember = (message.type == messageTypes.MEMBER) ? '' : ' is-member';
+    let isMember = (message.type == messageTypes.NORMAL) ? '' : ' is-member';
+    let listClass = `listChat__message${isMember}`;
 
     return (
-      <li className="listChat__message{isMember}" key={message.id}>
+      <li className={listClass} key={message.id}>
         <span className="listChat__name">{ message.name }</span>
         <span className="listChat__time">{ new Date(message.time).toLocaleString() }</span>
         <span className="listChat__body">{ message.body }</span>

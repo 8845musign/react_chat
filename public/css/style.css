@@ -97,7 +97,7 @@
   width:0;
 }
 
-.listChat__message.is-member:after {
+.listChat__message.is-member {
   background-color: rgb(232, 234, 246);
 }
 
