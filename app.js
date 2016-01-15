@@ -3,19 +3,23 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// server側で保持するデータ
 var members = {
   cnt : 0,
   list : []
 }
 
+// 静的ファイル
 app.use(express.static('public'));
 
+// ユーザの接続
 io.on('connection', function(socket){
   members.list.push({
     id : socket.id,
     name : socket.handshake.query.name
   });
 
+  // 全員に入室を通知
   io.emit('ENTER_MEMBER', {
     enter : {
       id : socket.id,
@@ -24,16 +28,23 @@ io.on('connection', function(socket){
     list : members.list
   });
 
+  // クライアント側からの発言を受信
   socket.on('SENT_MESSAGE', function(value){
     var name = getNameFromId('/#' + value.id);
+    // 全員に発言を送信
     io.emit('RECEIVE_MESSAGE', { body: value.message, name: name, time: new Date().getTime() });
   });});
 
+
+// Serverの立ち上げ
 http.listen(3000, function(){
   console.log('listening on *:3000')
 });
 
 
+/**
+ * IDから名前を取り出す
+ */
 function getNameFromId(id) {
   var name = '';
 
