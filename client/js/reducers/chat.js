@@ -1,12 +1,18 @@
 import * as actionTypes from '../constants/ActionTypes'
 import * as messageTypes from '../constants/MessageTypes'
 
+/**
+ * Stateの初期値
+ */
 const initialState = {
   self: {},
   members: [],
   messages: []
 };
 
+/**
+ * アクションを受け取ってチャットのStateを生成
+ */
 export default function chat(state = initialState, action) {
   switch (action.type) {
     case actionTypes.ENTER:
@@ -34,6 +40,7 @@ export default function chat(state = initialState, action) {
             type: messageTypes.ENTER,
             name: '',
             time: new Date(),
+            // ここでメッセージを生成するのはいけてないのでは...
             body: action.data.enter.name + 'さんが入室しました。'
           }
         ]
@@ -59,6 +66,9 @@ export default function chat(state = initialState, action) {
       });
 
     default:
+      /**
+       * 起動時や例外的なActionが渡って来た時はそのままStateを返す
+       */
       return state;
   }
 }
