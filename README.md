@@ -7,6 +7,7 @@
 * Redux
 * React
 * Socket.io
+* Express
 
 ## run
 
