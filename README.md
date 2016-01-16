@@ -1,7 +1,12 @@
 # react_chat
 
-![Data Flow](images/flow.jpg)
+![Data Flow](images/flow.jpeg)
 
+## Use
+
+* Redux
+* React
+* Socket.io
 
 ## run
 
