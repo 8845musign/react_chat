@@ -1,5 +1,8 @@
 # react_chat
 
+![Data Flow](images/flow.jpg)
+
+
 ## run
 
 ```
